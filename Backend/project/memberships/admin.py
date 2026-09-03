@@ -1,3 +1,5 @@
 from django.contrib import admin
+from .models import MembershipPlan, UserMembership
 
-# Register your models here.
+admin.site.register(MembershipPlan)
+admin.site.register(UserMembership)

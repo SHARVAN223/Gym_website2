@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'memberships',
     'programs',
     'trainers',
-    'facilities',
     'gallery',
     'testimonials',
     "corsheaders",

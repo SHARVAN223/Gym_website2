@@ -91,8 +91,9 @@ const ProgramCards = () => {
                                 />
 
                                 <div
-                                    className="position-absolute top-0 end-0 bg-danger m-3 rounded-circle d-flex align-items-center justify-content-center"
+                                    className="position-absolute top-0 bg-danger m-3 rounded-circle d-flex align-items-center justify-content-center"
                                     style={{
+                                        right: 0,
                                         width: "55px",
                                         height: "55px",
                                     }}

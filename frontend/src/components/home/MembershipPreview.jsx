@@ -1,140 +1,208 @@
+
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import api from "../../services/api";
 
 const MembershipPreview = () => {
-  const plans = [
-    {
-      duration: "1 Month",
-      subtitle: "Perfect for getting started",
-      price: "₹999",
-      features: [
-        "Full Gym Access",
-        "Modern Equipment",
-        "Basic Trainer Support",
-      ],
-      popular: false,
-    },
-    {
-      duration: "3 Months",
-      subtitle: "Best value for consistent training",
-      price: "₹2,499",
-      features: [
-        "Full Gym Access",
-        "Modern Equipment",
-        "Trainer Guidance",
-        "Personalized Support",
-      ],
-      popular: true,
-    },
-    {
-      duration: "6 Months",
-      subtitle: "Best for long-term transformation",
-      price: "₹4,499",
-      features: [
-        "Full Gym Access",
-        "Modern Equipment",
-        "Personal Trainer Support",
-        "Progress Tracking",
-      ],
-      popular: false,
-    },
-  ];
+  const [plans, setPlans] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  return (<section className="bg-black text-white py-5"> <div className="container py-4 py-lg-5">
+  useEffect(() => {
+    const fetchPlans = async () => {
+      try {
+        const response = await api.get("membership/");
 
-    
-    {/* Section Heading */}
-    <div className="text-center mb-5">
-      <p className="text-danger fw-bold text-uppercase mb-2">
-        Membership Plans
-      </p>
+        const activePlans = response.data.filter(
+          (plan) => plan.is_active
+        );
 
-      <h2 className="display-5 fw-bold">
-        Choose Your
-        <span className="text-danger"> Perfect Plan</span>
-      </h2>
+        setPlans(activePlans.slice(0, 3));
+      } catch (error) {
+        console.error("Error fetching membership plans:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-      <p className="text-secondary mt-3">
-        Start your fitness journey with a plan that suits your goals.
-      </p>
-    </div>
+    fetchPlans();
+  }, []);
 
-    {/* Plans */}
-    <div className="row g-4 justify-content-center">
-      {plans.map((plan, index) => (
-        <div className="col-md-6 col-lg-4" key={index}>
-          <div
-            className={`card h-100 rounded-4 p-3 ${plan.popular
-                ? "bg-danger text-white border-0 shadow-lg"
-                : "bg-dark text-white border border-secondary"
-              }`}
-          >
-            <div className="card-body text-center">
-
-              {plan.popular && (
-                <span className="badge bg-black px-3 py-2 mb-3">
-                  MOST POPULAR
-                </span>
-              )}
-
-              <h4 className="fw-bold">
-                {plan.duration}
-              </h4>
-
-              <p
-                className={
-                  plan.popular ? "" : "text-secondary"
-                }
-              >
-                {plan.subtitle}
-              </p>
-
-              <h2 className="display-5 fw-bold my-4">
-                {plan.price}
-              </h2>
-
-              <hr />
-
-              <div className="text-start my-4">
-                {plan.features.map((feature, featureIndex) => (
-                  <p key={featureIndex}>
-                    <i className="bi bi-check-circle-fill me-2"></i>
-                    {feature}
-                  </p>
-                ))}
-              </div>
-
-              <Link
-                to="/membership"
-                className={`btn w-100 py-3 fw-bold ${plan.popular
-                    ? "btn-dark"
-                    : "btn-outline-danger"
-                  }`}
-              >
-                Choose Plan
-              </Link>
-
-            </div>
-          </div>
+  if (loading) {
+    return (
+      <section className="bg-black text-white py-5">
+        <div className="container text-center py-5">
+          <div className="spinner-border text-danger" role="status"></div>
+          <p className="text-secondary mt-3">
+            Loading membership plans...
+          </p>
         </div>
-      ))}
-    </div>
+      </section>
+    );
+  }
 
-    {/* View All Plans */}
-    <div className="text-center mt-5">
-      <Link
-        to="/membership"
-        className="btn btn-danger btn-lg px-5 py-3 fw-bold"
-      >
-        View All Membership Plans
-        <i className="bi bi-arrow-right ms-2"></i>
-      </Link>
-    </div>
+  return (
+    <section className="bg-black text-white py-5">
+      <div className="container py-4 py-lg-5">
 
-  </div>
-  </section>
+        {/* Heading */}
+        <div className="text-center mb-5">
+          <p className="text-danger fw-bold text-uppercase mb-2">
+            Membership
+          </p>
 
+          <h2 className="display-5 fw-bold">
+            START YOUR{" "}
+            <span className="text-danger">TRANSFORMATION</span>
+          </h2>
 
+          <p
+            className="text-secondary mx-auto mt-3"
+            style={{ maxWidth: "650px" }}
+          >
+            Choose a membership plan that fits your goals and start
+            your fitness journey with PowerFit Gym.
+          </p>
+        </div>
+
+        {/* Plans */}
+        <div className="row g-4 justify-content-center">
+
+          {plans.length > 0 ? (
+            plans.map((plan, index) => {
+              const isPopular = index === 1;
+
+              return (
+                <div
+                  className="col-md-6 col-lg-4"
+                  key={plan.id}
+                >
+                  <div
+                    className={`position-relative h-100 rounded-4 p-4 ${
+                      isPopular
+                        ? "border border-danger"
+                        : "border border-secondary"
+                    }`}
+                    style={{
+                      background:
+                        "linear-gradient(145deg, #181818, #090909)",
+                    }}
+                  >
+
+                    {/* Popular */}
+                    {isPopular && (
+                      <span className="position-absolute top-0 start-50 translate-middle badge bg-danger rounded-pill px-3 py-2">
+                        MOST POPULAR
+                      </span>
+                    )}
+
+                    {/* Icon */}
+                    <div className="text-center mt-3">
+                      <div
+                        className="mx-auto mb-3 rounded-circle d-flex align-items-center justify-content-center"
+                        style={{
+                          width: "65px",
+                          height: "65px",
+                          backgroundColor: "rgba(220,53,69,0.12)",
+                        }}
+                      >
+                        <i className="bi bi-award-fill text-danger fs-3"></i>
+                      </div>
+
+                      <h4 className="fw-bold">
+                        {plan.name}
+                      </h4>
+                    </div>
+
+                    {/* Price */}
+                    <div className="text-center my-3">
+                      <span className="display-5 fw-bold">
+                        ₹{Number(plan.price).toLocaleString("en-IN")}
+                      </span>
+                    </div>
+
+                    {/* Duration */}
+                    <p className="text-center text-danger fw-semibold">
+                      <i className="bi bi-calendar-check me-2"></i>
+                      {plan.duration}
+                    </p>
+
+                    {/* Description */}
+                    <p
+                      className="text-secondary text-center mt-3"
+                      style={{ minHeight: "70px" }}
+                    >
+                      {plan.description}
+                    </p>
+
+                    {/* Features */}
+                    <div className="mt-4 mb-4">
+
+                      <p>
+                        <i className="bi bi-check-circle-fill text-danger me-2"></i>
+                        Full Gym Access
+                      </p>
+
+                      <p>
+                        <i className="bi bi-check-circle-fill text-danger me-2"></i>
+                        Modern Equipment
+                      </p>
+
+                      <p>
+                        <i className="bi bi-check-circle-fill text-danger me-2"></i>
+                        Professional Trainers
+                      </p>
+
+                      <p className="mb-0">
+                        <i className="bi bi-check-circle-fill text-danger me-2"></i>
+                        Fitness Support
+                      </p>
+
+                    </div>
+
+                    {/* Button */}
+                    <Link
+                      to="/membership"
+                      className={`btn w-100 rounded-pill fw-bold py-2 ${
+                        isPopular
+                          ? "btn-danger"
+                          : "btn-outline-danger"
+                      }`}
+                    >
+                      VIEW PLAN
+                      <i className="bi bi-arrow-right ms-2"></i>
+                    </Link>
+
+                  </div>
+                </div>
+              );
+            })
+          ) : (
+            <div className="col-12 text-center">
+              <h5>No Membership Plans Available</h5>
+
+              <p className="text-secondary">
+                Please add membership plans from Postman.
+              </p>
+            </div>
+          )}
+
+        </div>
+
+        {/* View All */}
+        <div className="text-center mt-5">
+          <Link
+            to="/membership"
+            className="btn btn-danger rounded-pill px-4 py-2 fw-bold"
+          >
+            VIEW ALL MEMBERSHIP PLANS
+            <i className="bi bi-arrow-right ms-2"></i>
+          </Link>
+        </div>
+
+      </div>
+    </section>
   );
 };
 
 export default MembershipPreview;
+

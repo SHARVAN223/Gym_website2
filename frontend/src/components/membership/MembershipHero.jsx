@@ -12,7 +12,7 @@ const MembershipHero = () => {
             }}
         > <div className="container py-5"> <div className="row justify-content-center text-center"> <div className="col-lg-9">
 
-            
+
             <p className="text-danger fw-bold text-uppercase mb-3">
                 Membership Plans
             </p>

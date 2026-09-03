@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const MembershipCTA = () => {
     return (<section className="bg-dark text-white py-5"> <div className="container py-4 py-lg-5">
 
-        
+
         <div className="bg-danger rounded-4 p-4 p-lg-5 text-center shadow-lg">
 
             <p className="text-uppercase fw-bold mb-2">
