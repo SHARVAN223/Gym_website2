@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from "react";
 import api from "../../services/api";
+import { Link } from "react-router-dom";
 
 const MembershipPlans = () => {
   const [plans, setPlans] = useState([]);
@@ -76,11 +77,10 @@ const MembershipPlans = () => {
                   key={plan.id}
                 >
                   <div
-                    className={`h-100 position-relative rounded-4 p-4 ${
-                      isPopular
-                        ? "border border-danger"
-                        : "border border-secondary"
-                    }`}
+                    className={`h-100 position-relative rounded-4 p-4 ${isPopular
+                      ? "border border-danger"
+                      : "border border-secondary"
+                      }`}
                     style={{
                       background:
                         "linear-gradient(145deg, #181818, #090909)",
@@ -162,16 +162,14 @@ const MembershipPlans = () => {
                     </div>
 
                     {/* Join Button */}
-                    <button
-                      className={`btn w-100 rounded-pill fw-bold py-2 ${
-                        isPopular
-                          ? "btn-danger"
-                          : "btn-outline-danger"
-                      }`}
+                    <Link
+                      to={`/register?plan=${plan.id}`}
+                      className={`btn w-100 rounded-pill fw-bold py-2 ${isPopular ? "btn-danger" : "btn-outline-danger"
+                        }`}
                     >
                       JOIN NOW
                       <i className="bi bi-arrow-right ms-2"></i>
-                    </button>
+                    </Link>
 
                   </div>
                 </div>
@@ -181,7 +179,7 @@ const MembershipPlans = () => {
             <div className="text-center">
               <h5>No Membership Plans Available</h5>
               <p className="text-secondary">
-                Please add membership plans from Postman.
+                Please add membership plans
               </p>
             </div>
           )}

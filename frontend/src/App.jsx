@@ -11,6 +11,9 @@ import Membership from "./pages/Membership";
 import Trainers from "./pages/Trainers";
 import Gallery from "./pages/Gallery";
 import Contact from "./pages/Contact";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Checkout from "./pages/Checkout";
 
 
 function App() {
@@ -28,6 +31,9 @@ function App() {
         <Route path="/trainers" element={<Trainers />} />
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/checkout" element={<Checkout />} />
       </Routes>
 
       {/* Footer */}

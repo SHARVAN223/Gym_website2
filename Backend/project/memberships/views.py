@@ -8,48 +8,25 @@ from .serializers import MembershipPlanSerializer,UserMembershipSerializer
 
 
 class MembershipPlanView(APIView):
-
     def get(self, request):
-
         plans = MembershipPlan.objects.filter(is_active=True)
-
-        serializer = MembershipPlanSerializer(
-            plans,
-            many=True
-        )
-
+        serializer = MembershipPlanSerializer(plans,many=True)
         return Response(serializer.data)
 
 
     def post(self, request):
-
-        serializer = MembershipPlanSerializer(
-            data=request.data
-        )
-
+        serializer = MembershipPlanSerializer(data=request.data)
         if serializer.is_valid():
-
             serializer.save()
+            return Response(serializer.data,status=status.HTTP_201_CREATED)
 
-            return Response(
-                serializer.data,
-                status=status.HTTP_201_CREATED
-            )
-
-        return Response(
-            serializer.errors,
-            status=status.HTTP_400_BAD_REQUEST
-        )
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
 
 class JoinMembershipView(APIView):
-
     permission_classes = [IsAuthenticated]
-
     def post(self, request):
-
         plan_id = request.data.get('plan')
-
         if not plan_id:
             return Response(
                 {'error': 'Plan is required'},

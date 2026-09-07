@@ -1,4 +1,5 @@
 import { useState } from "react";
+import api from "../../services/api";
 
 const initialFormData = {
     fullName: "",
@@ -18,11 +19,24 @@ const ContactContent = () => {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        alert("Thank you! Your message has been sent successfully.");
-        setFormData(initialFormData);
+        try {
+            await api.post("contact/", {
+                name: formData.fullName,
+                phone: formData.phone,
+                email: formData.email,
+                message: formData.message,
+            });
+
+            alert("Thank you! Your message has been sent successfully.");
+            setFormData(initialFormData);
+
+        } catch (error) {
+            console.error("Contact Error:", error);
+            alert("Something went wrong. Please try again.");
+        }
     };
 
     return (<section className="bg-black text-white py-5"> <div className="container py-4 py-lg-5">
@@ -82,7 +96,7 @@ const ContactContent = () => {
                 </div>
 
                 {/* Address */}
-                <div className="d-flex align-items-center mb-4">
+                <div className="d-flex align-items-start mb-4">
                     <div
                         className="bg-danger rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
                         style={{ width: "55px", height: "55px" }}
@@ -93,17 +107,30 @@ const ContactContent = () => {
                     <div className="ms-3">
                         <p className="text-secondary mb-1">Visit Us</p>
                         <h5 className="mb-0 fw-bold">
-                            Bhopal, Madhya Pradesh
+                            H 44, Gupta Colony, S.O,
+                            Anandnagar, Bhopal,
+                            Madhya Pradesh - 462022
                         </h5>
                     </div>
                 </div>
+
+                {/* Get Directions */}
+                <a
+                    href="https://www.google.com/maps/dir/23.2553068,77.4880351/Aarav+gym+and+fitness+club+branch+2,+H+44,+Gupta+colony,+S.O,+Anandnagar,+Bhopal,+Madhya+Pradesh+462022/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-outline-danger px-4 py-3 fw-bold mt-2 me-2"
+                >
+                    <i className="bi bi-geo-alt-fill me-2"></i>
+                    Get Directions
+                </a>
 
                 {/* WhatsApp */}
                 <a
                     href="https://wa.me/917050093475"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn btn-success px-4 py-3 fw-bold mt-3"
+                    className="btn btn-success px-4 py-3 fw-bold mt-2"
                 >
                     <i className="bi bi-whatsapp me-2"></i>
                     Chat With Us On WhatsApp

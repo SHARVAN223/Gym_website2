@@ -70,21 +70,6 @@ class LoginView(APIView):
             status=status.HTTP_400_BAD_REQUEST
         )
 
-class ProfileView(APIView):
-
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request):
-
-        user = request.user
-
-        return Response({
-            'id': user.id,
-            'name': user.name,
-            'email': user.email,
-            'phone': user.phone,
-        })
 
 
 class ProfileView(APIView):
