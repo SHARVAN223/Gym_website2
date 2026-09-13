@@ -14,15 +14,15 @@ import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Checkout from "./pages/Checkout";
+import Payment from "./pages/Payment";
+import ScrollToTop from "./components/ScrollToTop";
 
 
 function App() {
   return (
     <BrowserRouter>
-      {/* Navbar */}
       <Navbar />
-
-      {/* Pages */}
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
@@ -34,12 +34,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/payment" element={<Payment />} />
       </Routes>
-
-      {/* Footer */}
       <Footer />
-
-      {/* Floating WhatsApp Button */}
       <WhatsAppButton />
     </BrowserRouter>
   );

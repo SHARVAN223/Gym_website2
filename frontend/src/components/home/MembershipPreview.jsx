@@ -60,7 +60,7 @@ const MembershipPreview = () => {
             style={{ maxWidth: "650px" }}
           >
             Choose a membership plan that fits your goals and start
-            your fitness journey with PowerFit Gym.
+            your fitness journey with Aarav Gym & Fitness Club.
           </p>
         </div>
 
@@ -77,11 +77,10 @@ const MembershipPreview = () => {
                   key={plan.id}
                 >
                   <div
-                    className={`position-relative h-100 rounded-4 p-4 ${
-                      isPopular
+                    className={`membership-card position-relative h-100 rounded-4 p-4 ${isPopular
                         ? "border border-danger"
                         : "border border-secondary"
-                    }`}
+                      }`}
                     style={{
                       background:
                         "linear-gradient(145deg, #181818, #090909)",
@@ -162,11 +161,10 @@ const MembershipPreview = () => {
                     {/* Button */}
                     <Link
                       to="/membership"
-                      className={`btn w-100 rounded-pill fw-bold py-2 ${
-                        isPopular
-                          ? "btn-danger"
-                          : "btn-outline-danger"
-                      }`}
+                      className={`btn w-100 rounded-pill fw-bold py-2 ${isPopular
+                        ? "btn-danger"
+                        : "btn-outline-danger"
+                        }`}
                     >
                       VIEW PLAN
                       <i className="bi bi-arrow-right ms-2"></i>

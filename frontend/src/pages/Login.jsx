@@ -5,7 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 import api from "../services/api";
 
 const Login = () => {
-     const navigate = useNavigate();
+    const navigate = useNavigate();
     const [searchParams] = useSearchParams();
 
     const planId = searchParams.get("plan");
@@ -41,22 +41,7 @@ const Login = () => {
             const planId = searchParams.get("plan");
 
             if (planId) {
-                try {
-                    await api.post(
-                        "membership/join/",
-                        { plan: Number(planId) },
-                        {
-                            headers: {
-                                Authorization: `Bearer ${response.data.access}`,
-                            },
-                        }
-                    );
-
-                    navigate("/membership");
-                } catch (membershipError) {
-                    console.error("Membership Join Error:", membershipError);
-                    navigate("/membership");
-                }
+                navigate(`/checkout?plan=${planId}`);
             } else {
                 navigate("/");
             }

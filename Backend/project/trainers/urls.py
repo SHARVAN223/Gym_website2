@@ -4,4 +4,5 @@ from .views import TrainerView
 
 urlpatterns = [
     path('', TrainerView.as_view()),
+    path('<int:pk>/', TrainerView.as_view()),
 ]

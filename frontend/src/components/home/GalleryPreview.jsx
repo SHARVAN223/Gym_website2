@@ -1,79 +1,145 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import api from "../../services/api";
 
 const GalleryPreview = () => {
-  const images = [
-    {
-      image:
-        "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=900&q=80",
-      alt: "Modern Gym",
-    },
-    {
-      image:
-        "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=900&q=80",
-      alt: "Gym Training",
-    },
-    {
-      image:
-        "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=900&q=80",
-      alt: "Fitness Training",
-    },
-  ];
+  const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  return (<section className="bg-black text-white py-5"> <div className="container py-4 py-lg-5">
+  useEffect(() => {
+    const fetchGallery = async () => {
+      try {
+        const response = await api.get("gallery/");
 
+        // Home page par sirf 3 images
+        setImages(response.data.slice(0, 3));
+      } catch (error) {
+        console.error("Gallery Error:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    {/* Section Heading */}
-    <div className="text-center mb-5">
-      <p className="text-danger fw-bold text-uppercase mb-2">
-        Our Gallery
-      </p>
+    fetchGallery();
+  }, []);
 
-      <h2 className="display-5 fw-bold">
-        POWERFIT
-        <span className="text-danger"> IN ACTION</span>
-      </h2>
+  return (
+    <section className="bg-black text-white py-5">
+      <div className="container py-4 py-lg-5">
 
-      <p className="text-secondary mt-3">
-        Explore our gym environment and training experience.
-      </p>
-    </div>
+        {/* Heading */}
+        <div className="text-center mb-5">
 
-    {/* Gallery Images */}
-    <div className="row g-4">
-      {images.map((item, index) => (
-        <div className="col-md-6 col-lg-4" key={index}>
-          <div className="overflow-hidden rounded-4 shadow">
+          <p className="text-danger fw-bold text-uppercase mb-2">
+            Our Gallery
+          </p>
 
-            <img
-              src={item.image}
-              alt={item.alt}
-              className="img-fluid w-100"
-              style={{
-                height: "300px",
-                objectFit: "cover",
-              }}
-            />
+          <h2 className="display-5 fw-bold">
+            AARAV GYM
+            <span className="text-danger"> IN ACTION</span>
+          </h2>
+
+          <p className="text-secondary mt-3">
+            Explore our gym environment and training experience.
+          </p>
+
+        </div>
+
+        {/* Loading */}
+        {loading ? (
+          <div className="text-center py-5">
+
+            <div
+              className="spinner-border text-danger"
+              role="status"
+            ></div>
+
+            <p className="text-secondary mt-3">
+              Loading gallery...
+            </p>
 
           </div>
+        ) : (
+
+          <div className="row g-4">
+
+            {images.length > 0 ? (
+              images.map((item) => (
+
+                <div
+                  className="col-md-6 col-lg-4"
+                  key={item.id}
+                >
+
+                  <div className="gallery-preview-card position-relative overflow-hidden rounded-4 shadow">
+
+                    <img
+                      src={
+                        item.image
+                          ? `http://127.0.0.1:8000${item.image}`
+                          : "https://via.placeholder.com/1200x800?text=Gym+Gallery"
+                      }
+                      alt={item.title || "Aarav Gym"}
+                      className="img-fluid w-100"
+                      style={{
+                        height: "380px",
+                        objectFit: "cover",
+                      }}
+                    />
+
+                    {/* Title */}
+                    {item.title && (
+                      <div
+                        className="position-absolute bottom-0 start-0 end-0 p-4"
+                        style={{
+                          background:
+                            "linear-gradient(transparent, rgba(0,0,0,0.9))",
+                        }}
+                      >
+                        <h5 className="fw-bold mb-0">
+                          {item.title}
+                        </h5>
+                      </div>
+                    )}
+
+                  </div>
+
+                </div>
+
+              ))
+            ) : (
+
+              <div className="col-12 text-center py-4">
+
+                <h4>No Gallery Images Available</h4>
+
+                <p className="text-secondary">
+                  Please add images from Django Admin or Postman.
+                </p>
+
+              </div>
+
+            )}
+
+          </div>
+
+        )}
+
+        {/* View Full Gallery */}
+        <div className="text-center mt-5">
+
+          <Link
+            to="/gallery"
+            className="btn btn-outline-danger btn-lg px-5 py-3 fw-bold"
+          >
+            View Full Gallery
+            <i className="bi bi-images ms-2"></i>
+          </Link>
+
         </div>
-      ))}
-    </div>
 
-    {/* Button */}
-    <div className="text-center mt-5">
-      <Link
-        to="/gallery"
-        className="btn btn-outline-danger btn-lg px-5 py-3 fw-bold"
-      >
-        View Full Gallery
-        <i className="bi bi-images ms-2"></i>
-      </Link>
-    </div>
-
-  </div>
-  </section>
-
-
+      </div>
+    </section>
   );
 };
 

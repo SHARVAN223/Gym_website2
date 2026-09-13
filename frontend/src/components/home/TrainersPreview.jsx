@@ -1,121 +1,212 @@
+
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import api from "../../services/api";
 
 const TrainersPreview = () => {
-  const trainers = [
-    {
-      name: "Rahul Sharma",
-      role: "Strength & Muscle Coach",
-      image:
-        "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=900&q=80",
-    },
-    {
-      name: "Aman Verma",
-      role: "Weight Loss Coach",
-      image:
-        "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=900&q=80",
-    },
-    {
-      name: "Vikram Singh",
-      role: "Personal Trainer",
-      image:
-        "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=900&q=80",
-    },
-  ];
+  const [trainers, setTrainers] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  return (<section className="bg-dark text-white py-5"> <div className="container py-4 py-lg-5">
+  useEffect(() => {
+    const fetchTrainers = async () => {
+      try {
+        const response = await api.get("trainers/");
+        setTrainers(response.data.slice(0, 3));
+      } catch (error) {
+        console.error("Error fetching trainers:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    
-    {/* Section Heading */}
-    <div className="text-center mb-5">
-      <p className="text-danger fw-bold text-uppercase mb-2">
-        Our Trainers
-      </p>
+    fetchTrainers();
+  }, []);
 
-      <h2 className="display-5 fw-bold">
-        Train With The
-        <span className="text-danger"> Best</span>
-      </h2>
+  if (loading) {
+    return (
+      <section className="bg-black text-white py-5">
+        <div className="container text-center py-5">
+          <div className="spinner-border text-danger"></div>
 
-      <p className="text-secondary mt-3">
-        Meet our experienced trainers and take your fitness
-        journey to the next level.
-      </p>
-    </div>
+          <p className="text-secondary mt-3">
+            Loading our trainers...
+          </p>
+        </div>
+      </section>
+    );
+  }
 
-    {/* Trainer Cards */}
-    <div className="row g-4">
-      {trainers.map((trainer, index) => (
-        <div className="col-md-6 col-lg-4" key={index}>
-          <div className="card bg-black text-white border border-secondary rounded-4 overflow-hidden h-100">
+  return (
+    <section className="bg-black text-white py-5 overflow-hidden">
+      <div className="container py-4 py-lg-5">
 
-            <img
-              src={trainer.image}
-              alt={trainer.name}
-              className="card-img-top"
-              onError={(e) => {
-                e.target.src = "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=900&q=80";
-                e.target.onerror = null;
-              }}
-              style={{
-                height: "380px",
-                objectFit: "cover",
-              }}
-            />
+        {/* Heading */}
+        <div className="text-center mb-5">
 
-            <div className="card-body text-center p-4">
-              <h4 className="fw-bold mb-1">
-                {trainer.name}
-              </h4>
+          <div className="d-flex justify-content-center align-items-center gap-2 mb-3">
+            <span
+              className="bg-danger"
+              style={{ width: "45px", height: "2px" }}
+            ></span>
 
-              <p className="text-danger mb-3">
-                {trainer.role}
-              </p>
+            <span className="text-danger fw-bold text-uppercase small">
+              Our Expert Team
+            </span>
+
+            <span
+              className="bg-danger"
+              style={{ width: "45px", height: "2px" }}
+            ></span>
+          </div>
+
+          <h2 className="display-5 fw-bold mb-3">
+            TRAIN WITH
+            <span className="text-danger"> THE BEST</span>
+          </h2>
+
+          <p
+            className="text-secondary fs-5 mx-auto"
+            style={{ maxWidth: "650px" }}
+          >
+            Meet the experienced trainers who will push you,
+            guide you, and help you become stronger every day.
+          </p>
+
+        </div>
+
+        {/* Trainers */}
+        <div className="row g-4 justify-content-center">
+
+          {trainers.length > 0 ? (
+            trainers.map((trainer, index) => (
+
+              <div
+                className="col-md-6 col-lg-4"
+                key={trainer.id}
+                style={{ "--trainer-delay": `${index * 120}ms` }}
+              >
+
+                <div className="trainer-preview-card position-relative bg-dark rounded-4 overflow-hidden h-100">
+
+                  {/* Image */}
+                  <div className="position-relative overflow-hidden">
+
+                    <img
+                      src={
+                        trainer.image
+                          ? `http://127.0.0.1:8000${trainer.image}`
+                          : "https://via.placeholder.com/600x700?text=Trainer"
+                      }
+                      alt={trainer.name || "Trainer"}
+                      className="trainer-preview-image trainer-image w-100"
+                      style={{
+                        height: "430px",
+                        objectFit: "cover",
+                      }}
+                    />
+
+                    {/* Dark Gradient */}
+                    <div
+                      className="position-absolute bottom-0 start-0 end-0"
+                      style={{
+                        height: "45%",
+                        background:
+                          "linear-gradient(transparent, rgba(0,0,0,0.95))",
+                      }}
+                    ></div>
+
+                    {/* Experience Badge */}
+                    <div className="position-absolute top-0 end-0 m-3">
+                      <span className="badge bg-danger rounded-pill px-3 py-2">
+                        {trainer.experience}+ Years
+                      </span>
+                    </div>
+
+                  </div>
+
+                  {/* Content */}
+                  <div className="p-4 text-center">
+
+                    <h4 className="fw-bold mb-2">
+                      {trainer.name}
+                    </h4>
+
+                    <p className="text-danger fw-semibold mb-3">
+                      {trainer.specialization}
+                    </p>
+
+                    <div className="d-flex justify-content-center align-items-center gap-2 text-secondary mb-3">
+                      <i className="bi bi-award-fill text-danger"></i>
+
+                      <span>
+                        Professional Fitness Trainer
+                      </span>
+                    </div>
+
+                    {trainer.description && (
+                      <p className="text-secondary small mb-0">
+                        {trainer.description}
+                      </p>
+                    )}
+
+                    <div className="trainer-preview-socials d-flex justify-content-center gap-3 mt-3">
+                      <a
+                        href={trainer.facebook_url || "#"}
+                        className="trainer-preview-social"
+                        aria-label={`${trainer.name || "Trainer"} on Facebook`}
+                        target={trainer.facebook_url ? "_blank" : undefined}
+                        rel={trainer.facebook_url ? "noreferrer" : undefined}
+                      >
+                        <i className="bi bi-facebook"></i>
+                      </a>
+
+                      <a
+                        href={trainer.instagram_url || "#"}
+                        className="trainer-preview-social"
+                        aria-label={`${trainer.name || "Trainer"} on Instagram`}
+                        target={trainer.instagram_url ? "_blank" : undefined}
+                        rel={trainer.instagram_url ? "noreferrer" : undefined}
+                      >
+                        <i className="bi bi-instagram"></i>
+                      </a>
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            ))
+          ) : (
+            <div className="col-12 text-center py-4">
+              <h5>No trainers available</h5>
 
               <p className="text-secondary">
-                Get expert guidance and personalized support
-                for your fitness goals.
+                Add trainers from Django Admin or Postman.
               </p>
-
-              <div className="d-flex justify-content-center gap-3">
-                <a
-                  href="#"
-                  className="text-white fs-5"
-                  aria-label="Instagram"
-                >
-                  <i className="bi bi-instagram"></i>
-                </a>
-
-                <a
-                  href="#"
-                  className="text-white fs-5"
-                  aria-label="Facebook"
-                >
-                  <i className="bi bi-facebook"></i>
-                </a>
-              </div>
             </div>
+          )}
 
-          </div>
         </div>
-      ))}
-    </div>
 
-    {/* Button */}
-    <div className="text-center mt-5">
-      <Link
-        to="/trainers"
-        className="btn btn-danger btn-lg px-5 py-3 fw-bold"
-      >
-        Meet Our Trainers
-        <i className="bi bi-arrow-right ms-2"></i>
-      </Link>
-    </div>
+        {/* Button */}
+        <div className="text-center mt-5">
 
-  </div>
-  </section>
+          <Link
+            to="/trainers"
+            className="btn btn-danger btn-lg rounded-pill px-5 py-3 fw-bold"
+          >
+            Meet All Trainers
+            <i className="bi bi-arrow-right ms-2"></i>
+          </Link>
 
+        </div>
 
+      </div>
+    </section>
   );
 };
 
 export default TrainersPreview;
+

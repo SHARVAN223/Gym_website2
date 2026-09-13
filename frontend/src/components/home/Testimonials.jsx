@@ -81,9 +81,9 @@ const Testimonials = () => {
           {testimonials.length > 0 ? testimonials.map((testimonial) => (
             <div className="col-md-6 col-lg-4" key={testimonial.id}>
               <article
-                className="h-100 p-4 p-xl-5 rounded-4 border border-secondary"
+                className="testimonial-card h-100 p-4 p-xl-5 rounded-4 border border-secondary"
                 style={{
-                  background: "linear-gradient(145deg, #171717 0%, #090909 100%)",
+                  background:  "linear-gradient(145deg, #171717 0%, #090909 100%)",
                   boxShadow: "0 18px 40px rgba(0, 0, 0, 0.22)",
                 }}
               >
@@ -113,7 +113,7 @@ const Testimonials = () => {
                   </div>
                   <div>
                     <h5 className="fw-bold mb-1">{testimonial.name}</h5>
-                    <p className="text-danger mb-0 small">PowerFit Member</p>
+                    <p className="text-danger mb-0 small">Aarav Gym Member</p>
                   </div>
                 </div>
 

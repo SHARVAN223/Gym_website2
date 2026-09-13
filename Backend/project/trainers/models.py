@@ -20,5 +20,15 @@ class Trainer(models.Model):
 
     description = models.TextField()
 
+    facebook_url = models.URLField(
+        blank=True,
+        default='',
+    )
+
+    instagram_url = models.URLField(
+        blank=True,
+        default='',
+    )
+
     def __str__(self):
         return self.name

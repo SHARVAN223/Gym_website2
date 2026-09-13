@@ -27,7 +27,7 @@ const FinalCTA = () => {
           to="/membership"
           className="btn btn-dark btn-lg px-5 py-3 fw-bold"
         >
-          Join PowerFit Now
+          Join Aarav Gym Now
           <i className="bi bi-arrow-right ms-2"></i>
         </Link>
 

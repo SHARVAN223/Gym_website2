@@ -73,7 +73,7 @@ const MembershipPlans = () => {
 
               return (
                 <div
-                  className="col-md-6 col-lg-3"
+                  className="col-md-6 col-lg-3 membership-card"
                   key={plan.id}
                 >
                   <div
@@ -84,6 +84,7 @@ const MembershipPlans = () => {
                     style={{
                       background:
                         "linear-gradient(145deg, #181818, #090909)",
+                      transition: "all 0.4s ease",
                     }}
                   >
 
@@ -164,7 +165,7 @@ const MembershipPlans = () => {
                     {/* Join Button */}
                     <Link
                       to={`/register?plan=${plan.id}`}
-                      className={`btn w-100 rounded-pill fw-bold py-2 ${isPopular ? "btn-danger" : "btn-outline-danger"
+                      className={`btn w-100 rounded-pill fw-bold py-2 membership-btn ${isPopular ? "btn-danger" : "btn-outline-danger"
                         }`}
                     >
                       JOIN NOW

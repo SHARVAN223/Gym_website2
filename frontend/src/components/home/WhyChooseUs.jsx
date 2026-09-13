@@ -31,8 +31,8 @@ const WhyChooseUs = () => {
     <div className="col-lg-6">
       <div className="position-relative">
         <img
-          src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=1200&q=80"
-          alt="PowerFit Gym Training"
+          src="https://images.unsplash.com/photo-1577221084712-45b0445d2b00?auto=format&fit=crop&w=2000&q=90"
+          alt="Aarav Gym Training"
           className="img-fluid w-100 rounded-4 shadow"
           style={{
             height: "500px",
@@ -40,9 +40,9 @@ const WhyChooseUs = () => {
           }}
         />
 
-        <div className="position-absolute bottom-0 start-0 bg-danger m-3 p-4 rounded-3">
+        <div className="bg-dark border border-secondary rounded-4 p-4 h-100 feature-card">
           <h4 className="fw-bold mb-1">
-            TRAIN HARD
+           TRAIN STRONG
           </h4>
 
           <p className="mb-0">
@@ -55,7 +55,7 @@ const WhyChooseUs = () => {
     {/* Content */}
     <div className="col-lg-6">
       <p className="text-danger fw-bold text-uppercase mb-2">
-        Why Choose PowerFit
+        Why Choose Aarav Gym
       </p>
 
       <h2 className="display-5 fw-bold">
@@ -64,9 +64,7 @@ const WhyChooseUs = () => {
       </h2>
 
       <p className="text-secondary fs-5 mt-4">
-        At PowerFit Gym, we provide the right environment,
-        expert guidance, and modern equipment to help you
-        achieve your fitness goals.
+       At Aarav Gym & Fitness Club, we provide the right environment,
       </p>
 
       {/* Feature Cards */}
