@@ -1,5 +1,4 @@
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import api from "../services/api";
 
@@ -17,11 +16,39 @@ const Register = () => {
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
 
+    useEffect(() => {
+        if (!error) return;
+
+        const timer = setTimeout(() => {
+            setError("");
+        }, 3000);
+
+        return () => clearTimeout(timer);
+    }, [error]);
+
+    useEffect(() => {
+        if (!success) return;
+
+        const timer = setTimeout(() => {
+            setSuccess("");
+        }, 3000);
+
+        return () => clearTimeout(timer);
+    }, [success]);
+
     const handleChange = (e) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value,
         });
+
+        if (error) {
+            setError("");
+        }
+
+        if (success) {
+            setSuccess("");
+        }
     };
 
     const handleSubmit = async (e) => {
@@ -34,12 +61,16 @@ const Register = () => {
         try {
             await api.post("register/", formData);
 
+            const planId = new URLSearchParams(window.location.search).get("plan");
+
+            if (planId) {
+                localStorage.setItem("pendingPlanId", planId);
+            }
+
             setSuccess("Registration successful! Redirecting to login...");
 
             setTimeout(() => {
-                const planId = new URLSearchParams(window.location.search).get("plan");
-                
-                navigate(planId ? `/login?plan=${planId}` : "/login");  
+                navigate(planId ? `/login?plan=${planId}` : "/login");
             }, 1500);
 
         } catch (error) {
@@ -61,6 +92,10 @@ const Register = () => {
                 }
             } else {
                 setError("Unable to connect to server.");
+            }
+
+            if (error.response?.status === 400 && error.response?.data?.phone) {
+                setError("This phone number is already registered.");
             }
         } finally {
             setLoading(false);

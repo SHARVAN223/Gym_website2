@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'gallery',
     'testimonials',
     "corsheaders",
+    'rest_framework_simplejwt.token_blacklist',
 ]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -154,6 +155,10 @@ REST_FRAMEWORK = {
     ),
 }
 
+
+SIMPLE_JWT = {
+    'BLACKLIST_AFTER_ROTATION': True,
+}
 
 
 MEDIA_URL = '/media/'

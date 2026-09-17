@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useNavigate, Link } from "react-router-dom";
 import api from "../services/api";
@@ -18,11 +18,25 @@ const Login = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
+    useEffect(() => {
+        if (!error) return;
+
+        const timer = setTimeout(() => {
+            setError("");
+        }, 3000);
+
+        return () => clearTimeout(timer);
+    }, [error]);
+
     const handleChange = (e) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value,
         });
+
+        if (error) {
+            setError("");
+        }
     };
 
     const handleSubmit = async (e) => {
@@ -38,10 +52,11 @@ const Login = () => {
             localStorage.setItem("access", response.data.access);
             localStorage.setItem("refresh", response.data.refresh);
 
-            const planId = searchParams.get("plan");
+            const selectedPlanId = searchParams.get("plan") || localStorage.getItem("pendingPlanId");
 
-            if (planId) {
-                navigate(`/checkout?plan=${planId}`);
+            if (selectedPlanId) {
+                localStorage.removeItem("pendingPlanId");
+                navigate(`/checkout?plan=${selectedPlanId}`);
             } else {
                 navigate("/");
             }

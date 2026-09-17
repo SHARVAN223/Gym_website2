@@ -21,6 +21,11 @@ class RegisterSerializer(serializers.ModelSerializer):
             }
         }
 
+    def validate_phone(self, value):
+        if User.objects.filter(phone=value).exists():
+            raise serializers.ValidationError("This phone number is already registered.")
+        return value
+
     def create(self, validated_data):
 
         password = validated_data.pop('password')

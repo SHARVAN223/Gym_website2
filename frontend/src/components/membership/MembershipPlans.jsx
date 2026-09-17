@@ -41,7 +41,7 @@ const MembershipPlans = () => {
   }
 
   return (
-    <section className="bg-black text-white py-5">
+    <section id="plans" className="bg-black text-white py-5">
       <div className="container py-5">
 
         {/* Section Heading */}
@@ -165,6 +165,7 @@ const MembershipPlans = () => {
                     {/* Join Button */}
                     <Link
                       to={`/register?plan=${plan.id}`}
+                      onClick={() => localStorage.setItem("pendingPlanId", plan.id)}
                       className={`btn w-100 rounded-pill fw-bold py-2 membership-btn ${isPopular ? "btn-danger" : "btn-outline-danger"
                         }`}
                     >
