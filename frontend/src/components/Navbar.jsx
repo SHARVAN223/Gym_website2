@@ -121,15 +121,21 @@ const Navbar = () => {
 
           </ul>
 
-          {/* Join Button */}
-          <Link
-            to="/membership"
-            className="btn btn-danger navbar-join-btn px-4 py-2 fw-bold"
-          >
-            <i className="bi bi-lightning-charge-fill me-2"></i>
-            Join Now
-            <i className="bi bi-arrow-right ms-2 navbar-arrow"></i>
-          </Link>
+          {/* Auth Buttons */}
+          <div className="d-flex align-items-center gap-2 navbar-auth-actions">
+            <Link
+              to="/login"
+              className="btn btn-outline-light navbar-auth-btn px-3 py-2 fw-semibold"
+            >
+              Login
+            </Link>
+            <Link
+              to="/register"
+              className="btn btn-danger navbar-auth-btn px-3 py-2 fw-semibold"
+            >
+              Register
+            </Link>
+          </div>
 
         </div>
 

@@ -17,6 +17,7 @@ const Login = () => {
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
 
     useEffect(() => {
         if (!error) return;
@@ -158,7 +159,7 @@ const Login = () => {
                                         </span>
 
                                         <input
-                                            type="password"
+                                            type={showPassword ? "text" : "password"}
                                             name="password"
                                             value={formData.password}
                                             onChange={handleChange}
@@ -166,6 +167,16 @@ const Login = () => {
                                             placeholder="Enter your password"
                                             required
                                         />
+
+                                        <button
+                                            type="button"
+                                            className="btn btn-dark border-secondary text-light"
+                                            onClick={() => setShowPassword((prev) => !prev)}
+                                            aria-label={showPassword ? "Hide password" : "Show password"}
+                                            tabIndex={0}
+                                        >
+                                            <i className={showPassword ? "bi bi-eye-slash" : "bi bi-eye"}></i>
+                                        </button>
                                     </div>
                                 </div>
 

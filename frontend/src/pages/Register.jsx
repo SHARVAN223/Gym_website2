@@ -15,6 +15,7 @@ const Register = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
 
     useEffect(() => {
         if (!error) return;
@@ -67,10 +68,15 @@ const Register = () => {
                 localStorage.setItem("pendingPlanId", planId);
             }
 
-            setSuccess("Registration successful! Redirecting to login...");
+            const redirectPath = planId ? `/login?plan=${planId}` : "/";
+            setSuccess(
+                planId
+                    ? "Registration successful! Redirecting to login..."
+                    : "Registration successful! Redirecting to home..."
+            );
 
             setTimeout(() => {
-                navigate(planId ? `/login?plan=${planId}` : "/login");
+                navigate(redirectPath);
             }, 1500);
 
         } catch (error) {
@@ -239,7 +245,7 @@ const Register = () => {
                                         </span>
 
                                         <input
-                                            type="password"
+                                            type={showPassword ? "text" : "password"}
                                             name="password"
                                             value={formData.password}
                                             onChange={handleChange}
@@ -247,6 +253,16 @@ const Register = () => {
                                             placeholder="Create a password"
                                             required
                                         />
+
+                                        <button
+                                            type="button"
+                                            className="btn btn-dark border-secondary text-light"
+                                            onClick={() => setShowPassword((prev) => !prev)}
+                                            aria-label={showPassword ? "Hide password" : "Show password"}
+                                            tabIndex={0}
+                                        >
+                                            <i className={showPassword ? "bi bi-eye-slash" : "bi bi-eye"}></i>
+                                        </button>
                                     </div>
                                 </div>
 

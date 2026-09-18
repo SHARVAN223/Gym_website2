@@ -1492,8 +1492,8 @@ body {
     position: relative;
     overflow: hidden;
     transition: transform 0.35s ease,
-                box-shadow 0.35s ease,
-                border-color 0.35s ease;
+        box-shadow 0.35s ease,
+        border-color 0.35s ease;
     animation: aboutFadeUp 0.9s ease-out both;
 }
 
@@ -1674,7 +1674,7 @@ body {
         transform 0.35s ease,
         border-color 0.35s ease,
         box-shadow 0.35s ease;
-    
+
     animation: aboutFadeUp 0.8s ease-out both;
 }
 
@@ -1996,11 +1996,9 @@ body {
 .gallery-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-        to top,
-        rgba(0, 0, 0, 0.9),
-        rgba(0, 0, 0, 0.05) 65%
-    );
+    background: linear-gradient(to top,
+            rgba(0, 0, 0, 0.9),
+            rgba(0, 0, 0, 0.05) 65%);
     opacity: 0.7;
     transition: opacity 0.4s ease;
 }
@@ -2728,6 +2726,69 @@ body {
 
 
 /* =================================
+   AUTH BUTTONS
+================================= */
+
+.navbar-auth-actions {
+    gap: 0.75rem !important;
+}
+
+.navbar-auth-btn {
+    position: relative;
+    overflow: hidden;
+    border-radius: 999px;
+    min-width: 104px;
+    padding: 0.72rem 1.25rem !important;
+    font-size: 0.88rem;
+    letter-spacing: 0.02em;
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease,
+        background 0.25s ease;
+}
+
+.navbar-auth-btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, rgba(255, 255, 255, 0.18), transparent 55%);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.navbar-auth-btn:hover::before {
+    opacity: 1;
+}
+
+.navbar-auth-btn:hover {
+    transform: translateY(-2px);
+}
+
+.btn-outline-light.navbar-auth-btn {
+    border-color: rgba(255, 255, 255, 0.28);
+    background: rgba(255, 255, 255, 0.03);
+    color: #ffffff;
+}
+
+.btn-outline-light.navbar-auth-btn:hover {
+    border-color: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.12);
+}
+
+.btn-danger.navbar-auth-btn {
+    border: none;
+    background: linear-gradient(135deg, #dc3545, #b91c1c);
+    box-shadow: 0 8px 22px rgba(220, 53, 69, 0.28);
+}
+
+.btn-danger.navbar-auth-btn:hover {
+    box-shadow: 0 12px 26px rgba(220, 53, 69, 0.4);
+}
+
+
+/* =================================
    MOBILE MENU BUTTON
 ================================= */
 
@@ -2780,6 +2841,19 @@ body {
         margin-top: 12px;
         text-align: center;
     }
+
+    .navbar-auth-actions {
+        width: 100%;
+        margin-top: 12px;
+        display: flex !important;
+        justify-content: stretch;
+    }
+
+    .navbar-auth-btn {
+        flex: 1;
+        min-width: 0;
+        text-align: center;
+    }
 }
 
 
@@ -2814,4 +2888,3 @@ body {
     }
 
 }
-
